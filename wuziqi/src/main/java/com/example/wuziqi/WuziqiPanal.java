@@ -300,7 +300,19 @@ public class WuziqiPanal extends View {
             return true;
         return false;
     }
-
+    //放置Activity重建棋子删除
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        if(state instanceof Bundle){
+            Bundle bundle = (Bundle) state;
+            mIsGameOver = bundle.getBoolean(INSTANCE_GAME_OVER);
+            mWhiteArray = bundle.getParcelableArrayList(INSTANCE_WHITE_ARRAY);
+            mBlackArray = bundle.getParcelableArrayList(INSTANCE_BLACK_ARRAY);
+            super.onRestoreInstanceState(bundle.getParcelable(INSTANCE));
+            return;
+        }
+        super.onRestoreInstanceState(state);
+    }
 
     public void start(){
         mWhiteArray.clear();
@@ -329,17 +341,5 @@ public class WuziqiPanal extends View {
 
         return bundle;
     }
-//放置Activity重建棋子删除
-    @Override
-    protected void onRestoreInstanceState(Parcelable state) {
-        if(state instanceof Bundle){
-            Bundle bundle = (Bundle) state;
-            mIsGameOver = bundle.getBoolean(INSTANCE_GAME_OVER);
-            mWhiteArray = bundle.getParcelableArrayList(INSTANCE_WHITE_ARRAY);
-            mBlackArray = bundle.getParcelableArrayList(INSTANCE_BLACK_ARRAY);
-            super.onRestoreInstanceState(bundle.getParcelable(INSTANCE));
-            return;
-        }
-        super.onRestoreInstanceState(state);
-    }
+
 }
